@@ -1,5 +1,5 @@
 # Amazon PS5 Buddy
-## Automatize your PS5 availability checks
+## Automate your PS5 availability checks
 
 ### Install
 
