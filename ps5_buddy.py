@@ -5,20 +5,9 @@ import os
 from twilio.rest import Client
 from datetime import datetime
 
-# define params
-os.environ['TWILIO_ACCOUNT_SID'] = '<your sid>'
-os.environ['TWILIO_AUTH_TOKEN'] = '<your token>'
-from_whatsapp_number='whatsapp:<twilio nr>'
-to_whatsapp_number='whatsapp:+<your nr>'
-
-
-
 client = Client()
 driver = webdriver.Chrome(ChromeDriverManager().install())
 
-client.messages.create(body='Läuft!!!',
-  from_=from_whatsapp_number,
-  to=to_whatsapp_number)
 
 def clear_cache(driver):
     """Clear the cookies and cache for the ChromeDriver instance."""
@@ -46,8 +35,8 @@ def main():
         if (now_tuple not in time_store) and (now_tuple[1] == 0):
             time_store.add(now_tuple)
             client.messages.create(body='Läuft!!!',
-              from_=from_whatsapp_number,
-              to=to_whatsapp_number)
+              from_=os.environ["FROM_WHATSAPP_NUMBER"],
+              to=os.environ["TO_WHATSAPP_NUMBER"])
 
         # go on amazon
         driver.get('https://www.amazon.de/Sony-Interactive-Entertainment-PlayStation-5/dp/B08H98GVK8/ref=sr_ \
@@ -57,13 +46,14 @@ def main():
         # accept cookies
         try:
             driver.find_element_by_xpath('//*[@id="sp-cc-accept"]').click()
+
         except:
             print('Cookies already accepted.')    
         time.sleep(4)
         
         # click on ps5 digital edition
         try:
-            driver.find_element_by_xpath('//*[@id="a-autoid-17-announce"]/div/div[1]/span').click()
+            driver.find_element_by_xpath('/html/body/div[2]/div[2]/div[5]/div[5]/div[4]/div[30]/div[1]/div/form/div/ul/li[7]/span/div/span/span/span/button/div/div[1]/span').click()
         except:
             print('Already on PS5 Digital Edition')
         time.sleep(4)
@@ -74,8 +64,8 @@ def main():
         # check availability and send whatsapp if PS5 is available
         if availability != 'Derzeit nicht verfügbar.':
             client.messages.create(body='PS5 kaufen!!!',
-                          from_=from_whatsapp_number,
-                          to=to_whatsapp_number)
+                            from_=os.environ["FROM_WHATSAPP_NUMBER"],
+                            to=os.environ["TO_WHATSAPP_NUMBER"])
             os.system('play -nq -t alsa synth {} sine {}'.format(5, 440))
             print('PS5 kaufen!!!')
             break
@@ -86,4 +76,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-

@@ -17,6 +17,12 @@ It switches between amazon and clearing the browser cache. It only stops when th
 
 ### Run
 
+Before running the code, set the following environment variables:
+- TWILIO_ACCOUNT_SID
+- TWILIO_AUTH_TOKEN
+- FROM_WHATSAPP_NUMBER
+- TO_WHATSAPP_NUMBER.
+
 In a terminal or command window, run the following:
 
 ```bash
